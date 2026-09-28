@@ -75,9 +75,9 @@ export function ReactionTest({ onComplete, result }: Props) {
   return (
     <div className="rounded-3xl bg-ink p-5 text-ink-foreground">
       <div className="flex items-center justify-between">
-        <p className="font-display text-base font-semibold">Reaction speed</p>
+        <p className="font-display text-base font-semibold">Reactiesnelheid</p>
         <span className="rounded-full bg-sun px-2.5 py-1 text-[11px] font-semibold text-sun-foreground">
-          {running ? `Tap ${times.length + 1}/${ROUNDS}` : done ? "Done" : "Tap the dot"}
+          {running ? `Tik ${times.length + 1}/${ROUNDS}` : done ? "Klaar" : "Tik op de stip"}
         </span>
       </div>
 
@@ -103,14 +103,14 @@ export function ReactionTest({ onComplete, result }: Props) {
       <div className="mt-4 flex items-center justify-between">
         <p className="text-[11px] font-medium text-ink-foreground/50">
           {tooSoon
-            ? "Too soon — wait for the dot"
+            ? "Te vroeg — wacht op de stip"
             : running
               ? last
-                ? `Last tap ${last} ms`
-                : "Wait for the dot to appear"
+                ? `Laatste tik ${last} ms`
+                : "Wacht tot de stip verschijnt"
               : done
-                ? "Average over 5 taps"
-                : "5 taps, tap only when a dot appears"}
+                ? "Gemiddelde over 5 tikken"
+                : "5 tikken, tik alleen als er een stip verschijnt"}
         </p>
         <p className="font-display text-2xl font-bold text-sun tabular">
           {result ?? last ?? "—"}
@@ -124,7 +124,7 @@ export function ReactionTest({ onComplete, result }: Props) {
           onClick={start}
           className="mt-4 w-full rounded-2xl bg-cream/12 py-3 font-display text-sm font-semibold text-ink-foreground"
         >
-          {done ? "Test again" : "Start test"}
+          {done ? "Opnieuw testen" : "Start test"}
         </button>
       ) : null}
     </div>
