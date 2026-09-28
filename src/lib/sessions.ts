@@ -109,7 +109,7 @@ export function mockSessions(): Session[] {
   }));
 }
 
-const KEY = "pulsepop.sessions.v1";
+const KEY = "pulsepop.sessions.v2";
 
 export function loadSessions(): Session[] {
   if (typeof window === "undefined") return mockSessions();
