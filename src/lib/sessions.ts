@@ -59,7 +59,8 @@ export function score(s: Session): ScoredSession {
 
 export function initials(activity: string): string {
   const parts = activity.trim().split(/\s+/);
-  const letters = parts.length > 1 ? parts[0][0] + parts[1][0] : activity.slice(0, 2);
+  const letters =
+    parts.length > 1 ? (parts[0]?.[0] ?? "") + (parts[1]?.[0] ?? "") : activity.slice(0, 2);
   return letters.toUpperCase();
 }
 

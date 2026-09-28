@@ -9,7 +9,7 @@ type Phase = "before" | "after";
 
 export const Route = createFileRoute("/checkin")({
   validateSearch: (search: Record<string, unknown>) => ({
-    phase: (search.phase === "after" ? "after" : "before") as Phase,
+    phase: (search["phase"] === "after" ? "after" : "before") as Phase,
   }),
   head: () => ({
     meta: [
@@ -34,7 +34,7 @@ function CheckIn() {
   const navigate = useNavigate();
   const { addSession } = useSessions();
 
-  const [activity, setActivity] = useState(ACTIVITY_OPTIONS[0]);
+  const [activity, setActivity] = useState(ACTIVITY_OPTIONS[0] ?? "Training");
   const [duration, setDuration] = useState(40);
   const [hr, setHr] = useState(phase === "before" ? 64 : 152);
   const [reaction, setReaction] = useState<number | null>(null);
@@ -54,7 +54,7 @@ function CheckIn() {
       const next: Draft = { activity, hr, reaction, startedAt: new Date().toISOString() };
       saveDraft(next);
       setDraftState(next);
-      navigate({ to: "/", search: undefined });
+      navigate({ to: "/" });
       return;
     }
 
