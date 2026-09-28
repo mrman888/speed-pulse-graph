@@ -78,25 +78,26 @@ function iso(daysAgo: number, hour: number) {
   return d.toISOString();
 }
 
-/** 14 pre-populated demo sessions, newest last. */
+/** 14 voorgevulde demo-sessies, nieuwste als laatste. */
 export function mockSessions(): Session[] {
   const specs: Array<[number, number, string, number, number, number, number, number]> = [
-    // daysAgo, hour, activity, duration, hrBefore, hrAfter, reactBefore, reactAfter
-    [27, 7, "Morning Run", 35, 64, 148, 258, 279],
+    // dagenTerug, uur, activiteit, duur, hrVoor, hrNa, reactieVoor, reactieNa
+    [27, 7, "Ochtendloop", 35, 64, 148, 258, 279],
     [25, 18, "HIIT Circuit", 40, 71, 176, 244, 291],
     [23, 8, "Yoga Flow", 45, 62, 96, 266, 251],
-    [21, 19, "Strength Day", 55, 68, 152, 251, 276],
-    [18, 7, "Sprint Intervals", 30, 66, 183, 238, 288],
-    [16, 18, "Spin Class", 45, 70, 168, 249, 272],
-    [14, 8, "Tempo Run", 38, 63, 159, 243, 266],
-    [11, 7, "Hill Repeats", 42, 67, 188, 236, 294],
+    [21, 19, "Krachttraining", 55, 68, 152, 251, 276],
+    [18, 7, "Sprintintervallen", 30, 66, 183, 238, 288],
+    [16, 18, "Spinningles", 45, 70, 168, 249, 272],
+    [14, 8, "Tempoloop", 38, 63, 159, 243, 266],
+    [11, 7, "Heuveltraining", 42, 67, 188, 236, 294],
     [9, 20, "Yoga Flow", 50, 61, 99, 259, 244],
     [7, 18, "HIIT Circuit", 38, 69, 174, 232, 281],
-    [5, 7, "Morning Run", 40, 64, 152, 241, 262],
-    [3, 19, "Strength Day", 50, 66, 146, 238, 268],
-    [2, 7, "Sprint Intervals", 28, 68, 181, 229, 284],
-    [1, 18, "Tempo Run", 42, 62, 163, 226, 254],
+    [5, 7, "Ochtendloop", 40, 64, 152, 241, 262],
+    [3, 19, "Krachttraining", 50, 66, 146, 238, 268],
+    [2, 7, "Sprintintervallen", 28, 68, 181, 229, 284],
+    [1, 18, "Tempoloop", 42, 62, 163, 226, 254],
   ];
+
 
   return specs.map(([d, h, activity, duration, hb, ha, rb, ra], i) => ({
     id: `mock-${i}`,
