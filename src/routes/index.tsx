@@ -5,16 +5,16 @@ import { bandColor, formatDay, initials } from "@/lib/sessions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PulsePop — Training intensity tracker" },
+      { title: "PulsePop — Trainingsintensiteit bijhouden" },
       {
         name: "description",
         content:
-          "Log your heart rate and reaction speed before and after training, then see how intense each session really was.",
+          "Leg je hartslag en reactiesnelheid vast voor en na je training en zie hoe intensief elke sessie echt was.",
       },
-      { property: "og:title", content: "PulsePop — Training intensity tracker" },
+      { property: "og:title", content: "PulsePop — Trainingsintensiteit bijhouden" },
       {
         property: "og:description",
-        content: "Heart rate plus reaction-speed check-ins turned into an intensity score.",
+        content: "Hartslag plus reactiesnelheid omgezet in een intensiteitsscore.",
       },
     ],
   }),
@@ -41,7 +41,7 @@ function Home() {
     ? Math.round(scored.reduce((a, s) => a + s.intensity, 0) / scored.length)
     : 0;
   const best = scored.length ? Math.min(...scored.map((s) => s.before.reaction)) : 0;
-  const today = new Date().toLocaleDateString(undefined, {
+  const today = new Date().toLocaleDateString("nl-NL", {
     weekday: "long",
     day: "numeric",
     month: "short",
@@ -57,7 +57,7 @@ function Home() {
           <div>
             <p className="font-display text-lg font-bold leading-none">PulsePop</p>
             <p className="text-[11px] font-medium text-muted-foreground">
-              Training intensity tracker
+              Trainingsintensiteit bijhouden
             </p>
           </div>
         </div>
@@ -72,9 +72,9 @@ function Home() {
       <div className="px-5">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-coral">{today}</p>
         <h1 className="mt-1 font-display text-[34px] font-bold leading-[1.02]">
-          How hard
+          Hoe hard
           <br />
-          did you push?
+          ging je ervoor?
         </h1>
       </div>
 
@@ -85,26 +85,26 @@ function Home() {
             search={{ phase: "before" }}
             className="flex-1 rounded-full bg-ink py-3 text-center font-display text-sm font-semibold text-ink-foreground"
           >
-            Before
+            Voor
           </Link>
           <Link
             to="/checkin"
             search={{ phase: "after" }}
             className="flex-1 rounded-full border-2 border-border bg-card py-3 text-center font-display text-sm font-semibold text-muted-foreground"
           >
-            After
+            Na
           </Link>
         </div>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-3 px-5">
         <div className="rounded-3xl bg-card p-4 shadow-chunky">
-          <p className="text-[11px] font-semibold text-muted-foreground">Avg intensity</p>
+          <p className="text-[11px] font-semibold text-muted-foreground">Gem. intensiteit</p>
           <p className="mt-1 font-display text-[34px] font-bold leading-none tabular">{avg}</p>
-          <p className="text-[11px] font-medium text-muted-foreground">of 100</p>
+          <p className="text-[11px] font-medium text-muted-foreground">van 100</p>
         </div>
         <div className="rounded-3xl bg-card p-4 shadow-chunky">
-          <p className="text-[11px] font-semibold text-muted-foreground">Best reaction</p>
+          <p className="text-[11px] font-semibold text-muted-foreground">Snelste reactie</p>
           <p className="mt-1 font-display text-[34px] font-bold leading-none tabular">{best}</p>
           <p className="text-[11px] font-medium text-muted-foreground">ms</p>
         </div>
@@ -113,8 +113,8 @@ function Home() {
       <div className="mt-4 px-5">
         <div className="rounded-3xl bg-card p-5">
           <div className="flex items-center justify-between">
-            <p className="font-display text-base font-semibold">Last 7 sessions</p>
-            <span className="text-[11px] font-semibold text-muted-foreground">Intensity</span>
+            <p className="font-display text-base font-semibold">Laatste 7 sessies</p>
+            <span className="text-[11px] font-semibold text-muted-foreground">Intensiteit</span>
           </div>
           <div className="mt-4 flex h-28 items-end justify-between gap-2">
             {lastSeven.map((s) => (
@@ -124,7 +124,7 @@ function Home() {
                   style={{ height: `${Math.max(12, s.intensity)}%` }}
                 />
                 <span className="text-[10px] font-semibold text-muted-foreground">
-                  {new Date(s.date).toLocaleDateString(undefined, { weekday: "narrow" })}
+                  {new Date(s.date).toLocaleDateString("nl-NL", { weekday: "narrow" })}
                 </span>
               </div>
             ))}
@@ -134,9 +134,9 @@ function Home() {
 
       <div className="mt-4 px-5">
         <div className="flex items-center justify-between">
-          <p className="font-display text-base font-semibold">Recent sessions</p>
+          <p className="font-display text-base font-semibold">Recente sessies</p>
           <Link to="/stats" className="text-[11px] font-semibold text-muted-foreground">
-            See graphs
+            Bekijk grafieken
           </Link>
         </div>
         <div className="mt-3 space-y-2.5">
@@ -169,7 +169,7 @@ function Home() {
           search={{ phase: "before" }}
           className="block w-full rounded-full bg-coral py-4 text-center font-display text-lg font-bold text-coral-foreground shadow-chunky-lg"
         >
-          Start session
+          Start sessie
         </Link>
       </div>
     </div>
