@@ -1,0 +1,149 @@
+export type Reading = {
+  /** heart rate in bpm */
+  hr: number;
+  /** average reaction time in ms */
+  reaction: number;
+};
+
+export type Session = {
+  id: string;
+  /** ISO date string */
+  date: string;
+  activity: string;
+  /** minutes */
+  duration: number;
+  before: Reading;
+  after: Reading;
+};
+
+export type ScoredSession = Session & {
+  intensity: number;
+  band: "Low" | "Medium" | "High";
+};
+
+const ACTIVITIES = [
+  "HIIT Circuit",
+  "Morning Run",
+  "Yoga Flow",
+  "Sprint Intervals",
+  "Hill Repeats",
+  "Strength Day",
+  "Spin Class",
+  "Tempo Run",
+];
+
+export const ACTIVITY_OPTIONS = ACTIVITIES;
+
+/**
+ * Intensity 0-100 from how far the heart rate climbed plus how much the
+ * reaction test degraded (fatigue) during the session.
+ */
+export function intensityScore(s: Session): number {
+  const hrLift = Math.max(0, s.after.hr - s.before.hr); // 0..120
+  const fatigue = Math.max(0, s.after.reaction - s.before.reaction); // 0..120
+  const durationWeight = Math.min(1, s.duration / 60);
+  const raw = (hrLift / 110) * 62 + (fatigue / 110) * 23 + durationWeight * 15;
+  return Math.max(1, Math.min(100, Math.round(raw)));
+}
+
+export function band(intensity: number): ScoredSession["band"] {
+  if (intensity >= 72) return "High";
+  if (intensity >= 45) return "Medium";
+  return "Low";
+}
+
+export function score(s: Session): ScoredSession {
+  const intensity = intensityScore(s);
+  return { ...s, intensity, band: band(intensity) };
+}
+
+export function initials(activity: string): string {
+  const parts = activity.trim().split(/\s+/);
+  const letters = parts.length > 1 ? parts[0][0] + parts[1][0] : activity.slice(0, 2);
+  return letters.toUpperCase();
+}
+
+export function bandColor(b: ScoredSession["band"]): string {
+  if (b === "High") return "coral";
+  if (b === "Medium") return "sun";
+  return "mint";
+}
+
+function iso(daysAgo: number, hour: number) {
+  const d = new Date();
+  d.setHours(hour, 0, 0, 0);
+  d.setDate(d.getDate() - daysAgo);
+  return d.toISOString();
+}
+
+/** 14 pre-populated demo sessions, newest last. */
+export function mockSessions(): Session[] {
+  const specs: Array<[number, number, string, number, number, number, number, number]> = [
+    // daysAgo, hour, activity, duration, hrBefore, hrAfter, reactBefore, reactAfter
+    [27, 7, "Morning Run", 35, 64, 148, 258, 279],
+    [25, 18, "HIIT Circuit", 40, 71, 176, 244, 291],
+    [23, 8, "Yoga Flow", 45, 62, 96, 266, 251],
+    [21, 19, "Strength Day", 55, 68, 152, 251, 276],
+    [18, 7, "Sprint Intervals", 30, 66, 183, 238, 288],
+    [16, 18, "Spin Class", 45, 70, 168, 249, 272],
+    [14, 8, "Tempo Run", 38, 63, 159, 243, 266],
+    [11, 7, "Hill Repeats", 42, 67, 188, 236, 294],
+    [9, 20, "Yoga Flow", 50, 61, 99, 259, 244],
+    [7, 18, "HIIT Circuit", 38, 69, 174, 232, 281],
+    [5, 7, "Morning Run", 40, 64, 152, 241, 262],
+    [3, 19, "Strength Day", 50, 66, 146, 238, 268],
+    [2, 7, "Sprint Intervals", 28, 68, 181, 229, 284],
+    [1, 18, "Tempo Run", 42, 62, 163, 226, 254],
+  ];
+
+  return specs.map(([d, h, activity, duration, hb, ha, rb, ra], i) => ({
+    id: `mock-${i}`,
+    date: iso(d, h),
+    activity,
+    duration,
+    before: { hr: hb, reaction: rb },
+    after: { hr: ha, reaction: ra },
+  }));
+}
+
+const KEY = "pulsepop.sessions.v1";
+
+export function loadSessions(): Session[] {
+  if (typeof window === "undefined") return mockSessions();
+  try {
+    const raw = window.localStorage.getItem(KEY);
+    if (!raw) {
+      const seeded = mockSessions();
+      window.localStorage.setItem(KEY, JSON.stringify(seeded));
+      return seeded;
+    }
+    const parsed = JSON.parse(raw) as Session[];
+    return Array.isArray(parsed) && parsed.length ? parsed : mockSessions();
+  } catch {
+    return mockSessions();
+  }
+}
+
+export function saveSessions(sessions: Session[]) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(KEY, JSON.stringify(sessions));
+  } catch {
+    /* storage unavailable */
+  }
+}
+
+export function formatDay(isoDate: string) {
+  return new Date(isoDate).toLocaleDateString(undefined, {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+}
+
+export function formatShort(isoDate: string) {
+  return new Date(isoDate).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+}
