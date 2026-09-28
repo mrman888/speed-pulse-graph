@@ -1,16 +1,16 @@
 export type Reading = {
-  /** heart rate in bpm */
+  /** hartslag in bpm */
   hr: number;
-  /** average reaction time in ms */
+  /** gemiddelde reactietijd in ms */
   reaction: number;
 };
 
 export type Session = {
   id: string;
-  /** ISO date string */
+  /** ISO datum string */
   date: string;
   activity: string;
-  /** minutes */
+  /** minuten */
   duration: number;
   before: Reading;
   after: Reading;
@@ -18,25 +18,25 @@ export type Session = {
 
 export type ScoredSession = Session & {
   intensity: number;
-  band: "Low" | "Medium" | "High";
+  band: "Laag" | "Gemiddeld" | "Hoog";
 };
 
 const ACTIVITIES = [
   "HIIT Circuit",
-  "Morning Run",
+  "Ochtendloop",
   "Yoga Flow",
-  "Sprint Intervals",
-  "Hill Repeats",
-  "Strength Day",
-  "Spin Class",
-  "Tempo Run",
+  "Sprintintervallen",
+  "Heuveltraining",
+  "Krachttraining",
+  "Spinningles",
+  "Tempoloop",
 ];
 
 export const ACTIVITY_OPTIONS = ACTIVITIES;
 
 /**
- * Intensity 0-100 from how far the heart rate climbed plus how much the
- * reaction test degraded (fatigue) during the session.
+ * Intensiteit 0-100 op basis van hoe hoog de hartslag klom plus hoeveel de
+ * reactietest verslechterde (vermoeidheid) tijdens de sessie.
  */
 export function intensityScore(s: Session): number {
   const hrLift = Math.max(0, s.after.hr - s.before.hr); // 0..120
@@ -47,10 +47,11 @@ export function intensityScore(s: Session): number {
 }
 
 export function band(intensity: number): ScoredSession["band"] {
-  if (intensity >= 72) return "High";
-  if (intensity >= 45) return "Medium";
-  return "Low";
+  if (intensity >= 72) return "Hoog";
+  if (intensity >= 45) return "Gemiddeld";
+  return "Laag";
 }
+
 
 export function score(s: Session): ScoredSession {
   const intensity = intensityScore(s);
