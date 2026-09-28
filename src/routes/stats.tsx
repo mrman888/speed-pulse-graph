@@ -151,6 +151,10 @@ function Stats() {
                 <stop offset="0%" stopColor="var(--mint)" stopOpacity={0.5} />
                 <stop offset="100%" stopColor="var(--mint)" stopOpacity={0.04} />
               </linearGradient>
+              <linearGradient id="reactionAfterFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--grape)" stopOpacity={0.35} />
+                <stop offset="100%" stopColor="var(--grape)" stopOpacity={0.03} />
+              </linearGradient>
             </defs>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
@@ -164,13 +168,13 @@ function Stats() {
               strokeWidth={3}
               fill="url(#reactionFill)"
             />
-            <Line
+            <Area
               type="monotone"
               dataKey="reactionAfter"
               name="After"
               stroke="var(--grape)"
               strokeWidth={2}
-              dot={false}
+              fill="url(#reactionAfterFill)"
             />
           </AreaChart>
         </ChartCard>
