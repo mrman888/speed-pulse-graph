@@ -137,7 +137,7 @@ export function saveSessions(sessions: Session[]) {
 }
 
 export function formatDay(isoDate: string) {
-  return new Date(isoDate).toLocaleDateString(undefined, {
+  return new Date(isoDate).toLocaleDateString("nl-NL", {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -145,7 +145,7 @@ export function formatDay(isoDate: string) {
 }
 
 export function formatShort(isoDate: string) {
-  return new Date(isoDate).toLocaleDateString(undefined, {
+  return new Date(isoDate).toLocaleDateString("nl-NL", {
     day: "numeric",
     month: "short",
   });
