@@ -66,8 +66,8 @@ export function initials(activity: string): string {
 }
 
 export function bandColor(b: ScoredSession["band"]): string {
-  if (b === "High") return "coral";
-  if (b === "Medium") return "sun";
+  if (b === "Hoog") return "coral";
+  if (b === "Gemiddeld") return "sun";
   return "mint";
 }
 
