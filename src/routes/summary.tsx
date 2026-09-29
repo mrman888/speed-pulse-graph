@@ -5,16 +5,16 @@ import { bandColor, formatDay } from "@/lib/sessions";
 export const Route = createFileRoute("/summary")({
   head: () => ({
     meta: [
-      { title: "Session summary — PulsePop" },
+      { title: "Sessieoverzicht — PulsePop" },
       {
         name: "description",
         content:
-          "Before and after comparison of your latest training: heart rate lift, reaction-time change and intensity score.",
+          "Vergelijking van voor en na je laatste training: hartslagstijging, verandering in reactietijd en intensiteitsscore.",
       },
-      { property: "og:title", content: "Session summary — PulsePop" },
+      { property: "og:title", content: "Sessieoverzicht — PulsePop" },
       {
         property: "og:description",
-        content: "See how far your heart rate climbed and how your reflexes held up.",
+        content: "Zie hoe hoog je hartslag klom en hoe goed je reflexen het hielden.",
       },
     ],
   }),
@@ -27,7 +27,17 @@ const TONE: Record<string, string> = {
   mint: "bg-mint text-ink",
 };
 
-function Row({ label, before, after, unit }: { label: string; before: number; after: number; unit: string }) {
+function Row({
+  label,
+  before,
+  after,
+  unit,
+}: {
+  label: string;
+  before: number;
+  after: number;
+  unit: string;
+}) {
   const delta = after - before;
   return (
     <div className="flex items-center justify-between rounded-2xl bg-card p-4">
@@ -58,13 +68,13 @@ function Summary() {
           ←
         </Link>
         <p className="font-display text-sm font-semibold uppercase tracking-[0.16em]">
-          Session summary
+          Sessieoverzicht
         </p>
         <span className="size-10" />
       </header>
 
       {!ready || !session ? (
-        <p className="px-5 text-sm text-muted-foreground">No sessions logged yet.</p>
+        <p className="px-5 text-sm text-muted-foreground">Nog geen sessies vastgelegd.</p>
       ) : (
         <>
           <div className="px-5">
@@ -77,11 +87,9 @@ function Summary() {
           </div>
 
           <div className="mt-4 px-5">
-            <div
-              className={`rounded-3xl p-5 shadow-chunky ${TONE[bandColor(session.band)]}`}
-            >
+            <div className={`rounded-3xl p-5 shadow-chunky ${TONE[bandColor(session.band)]}`}>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] opacity-70">
-                Intensity
+                Intensiteit
               </p>
               <div className="mt-1 flex items-end gap-2">
                 <span className="font-display text-[64px] font-bold leading-none tabular">
@@ -99,9 +107,9 @@ function Summary() {
           </div>
 
           <div className="mt-4 space-y-2.5 px-5">
-            <Row label="Heart rate" before={session.before.hr} after={session.after.hr} unit="bpm" />
+            <Row label="Hartslag" before={session.before.hr} after={session.after.hr} unit="bpm" />
             <Row
-              label="Reaction speed"
+              label="Reactiesnelheid"
               before={session.before.reaction}
               after={session.after.reaction}
               unit="ms"
@@ -110,12 +118,12 @@ function Summary() {
 
           <div className="mt-4 px-5">
             <div className="rounded-3xl bg-ink p-5 text-ink-foreground">
-              <p className="font-display text-base font-semibold">What this means</p>
+              <p className="font-display text-base font-semibold">Wat dit betekent</p>
               <p className="mt-2 text-sm text-ink-foreground/70">
-                Your heart rate climbed {session.after.hr - session.before.hr} bpm and your taps got{" "}
+                Je hartslag klom {session.after.hr - session.before.hr} bpm en je tikken werden{" "}
                 {Math.abs(session.after.reaction - session.before.reaction)} ms{" "}
-                {session.after.reaction > session.before.reaction ? "slower" : "faster"} — a{" "}
-                {session.band.toLowerCase()} intensity session.
+                {session.after.reaction > session.before.reaction ? "langzamer" : "sneller"} — een
+                sessie met {session.band.toLowerCase()}e intensiteit.
               </p>
             </div>
           </div>
@@ -127,7 +135,7 @@ function Summary() {
           to="/stats"
           className="flex-1 rounded-full border-2 border-border bg-card py-4 text-center font-display text-base font-bold"
         >
-          See graphs
+          Bekijk grafieken
         </Link>
         <Link
           to="/"
