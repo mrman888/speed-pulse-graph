@@ -18,16 +18,16 @@ import { formatShort } from "@/lib/sessions";
 export const Route = createFileRoute("/stats")({
   head: () => ({
     meta: [
-      { title: "Graphs — PulsePop" },
+      { title: "Grafieken — PulsePop" },
       {
         name: "description",
         content:
-          "Charts of your training intensity, heart-rate lift and reaction-speed trend across every logged session.",
+          "Grafieken van je trainingsintensiteit, hartslagstijging en reactiesnelheid over al je sessies.",
       },
-      { property: "og:title", content: "Graphs — PulsePop" },
+      { property: "og:title", content: "Grafieken — PulsePop" },
       {
         property: "og:description",
-        content: "Intensity, heart rate and reaction time trends over your training history.",
+        content: "Trends in intensiteit, hartslag en reactietijd door je trainingsgeschiedenis.",
       },
     ],
   }),
@@ -43,10 +43,12 @@ function ChartCard({
   title,
   note,
   children,
+  footer,
 }: {
   title: string;
   note: string;
   children: React.ReactNode;
+  footer?: React.ReactNode;
 }) {
   return (
     <div className="rounded-3xl bg-card p-4 shadow-chunky">
@@ -59,6 +61,7 @@ function ChartCard({
           {children as React.ReactElement}
         </ResponsiveContainer>
       </div>
+      {footer ? <div className="mt-3">{footer}</div> : null}
     </div>
   );
 }
@@ -87,6 +90,10 @@ function Stats() {
     reactionAfter: s.after.reaction,
   }));
 
+  const avgLift = data.length
+    ? Math.round(data.reduce((a, d) => a + d.lift, 0) / data.length)
+    : 0;
+
   return (
     <div className="mx-auto flex min-h-screen w-full max-w-[480px] flex-col pb-8">
       <header className="flex items-center justify-between px-5 pb-3 pt-5">
@@ -96,19 +103,19 @@ function Stats() {
         >
           ←
         </Link>
-        <p className="font-display text-sm font-semibold uppercase tracking-[0.16em]">Graphs</p>
+        <p className="font-display text-sm font-semibold uppercase tracking-[0.16em]">Grafieken</p>
         <span className="size-10" />
       </header>
 
       <div className="px-5">
-        <h1 className="font-display text-[30px] font-bold leading-[1.05]">Your training trend</h1>
+        <h1 className="font-display text-[30px] font-bold leading-[1.05]">Jouw trainingstrend</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {data.length} sessions of heart rate and reaction data.
+          {data.length} sessies met hartslag- en reactiegegevens.
         </p>
       </div>
 
       <div className="mt-4 space-y-4 px-5">
-        <ChartCard title="Intensity" note="per session">
+        <ChartCard title="Intensiteit" note="per sessie">
           <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
@@ -118,7 +125,7 @@ function Stats() {
           </BarChart>
         </ChartCard>
 
-        <ChartCard title="Heart rate" note="before vs after">
+        <ChartCard title="Hartslag" note="voor vs. na">
           <LineChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
@@ -127,7 +134,7 @@ function Stats() {
             <Line
               type="monotone"
               dataKey="hrAfter"
-              name="After"
+              name="Na"
               stroke="var(--coral)"
               strokeWidth={3}
               dot={false}
@@ -135,7 +142,7 @@ function Stats() {
             <Line
               type="monotone"
               dataKey="hrBefore"
-              name="Before"
+              name="Voor"
               stroke="var(--sky)"
               strokeWidth={2}
               strokeDasharray="4 4"
@@ -144,7 +151,7 @@ function Stats() {
           </LineChart>
         </ChartCard>
 
-        <ChartCard title="Reaction speed" note="ms, lower is better">
+        <ChartCard title="Reactiesnelheid" note="ms, lager is beter">
           <AreaChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="reactionFill" x1="0" y1="0" x2="0" y2="1">
@@ -163,7 +170,7 @@ function Stats() {
             <Area
               type="monotone"
               dataKey="reactionBefore"
-              name="Before"
+              name="Voor"
               stroke="var(--mint)"
               strokeWidth={3}
               fill="url(#reactionFill)"
@@ -171,7 +178,7 @@ function Stats() {
             <Area
               type="monotone"
               dataKey="reactionAfter"
-              name="After"
+              name="Na"
               stroke="var(--grape)"
               strokeWidth={2}
               fill="url(#reactionAfterFill)"
@@ -179,7 +186,26 @@ function Stats() {
           </AreaChart>
         </ChartCard>
 
-        <ChartCard title="Heart-rate lift" note="after minus before">
+        <ChartCard
+          title="Hartslagstijging"
+          note="na min voor"
+          footer={
+            <div className="rounded-2xl bg-muted p-4">
+              <p className="font-display text-sm font-semibold">Wat is hartslagstijging?</p>
+              <p className="mt-1.5 text-[12px] leading-relaxed text-muted-foreground">
+                De hartslagstijging is het verschil tussen je hartslag direct na de training en je
+                hartslag ervoor. Begin je op 64 bpm en eindig je op 152 bpm, dan is je stijging +88
+                bpm. Hoe hoger de staaf, hoe harder je hart moest werken vergeleken met je rustpunt
+                van die dag. Omdat we van jouw eigen startpunt uitgaan, blijft het eerlijk
+                vergelijken op dagen dat je al opgejaagd of juist heel rustig begint. Deze stijging
+                weegt het zwaarst mee in je intensiteitsscore.
+              </p>
+              <p className="mt-2 text-[12px] font-semibold text-coral tabular">
+                Jouw gemiddelde: +{avgLift} bpm per sessie
+              </p>
+            </div>
+          }
+        >
           <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
@@ -196,7 +222,7 @@ function Stats() {
           search={{ phase: "before" }}
           className="block w-full rounded-full bg-coral py-4 text-center font-display text-lg font-bold text-coral-foreground shadow-chunky-lg"
         >
-          Start session
+          Start sessie
         </Link>
       </div>
     </div>

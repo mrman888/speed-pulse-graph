@@ -17,12 +17,12 @@ export const Route = createFileRoute("/checkin")({
       {
         name: "description",
         content:
-          "Log your heart rate and run the tap-the-dot reaction test before and after your training.",
+          "Leg je hartslag vast en doe de tik-op-de-stip reactietest voor en na je training.",
       },
       { property: "og:title", content: "Check-in — PulsePop" },
       {
         property: "og:description",
-        content: "Heart rate entry plus a five-tap reaction test, before and after training.",
+        content: "Hartslag invoeren plus een reactietest van vijf tikken, voor en na de training.",
       },
     ],
   }),
@@ -88,21 +88,21 @@ function CheckIn() {
           ←
         </Link>
         <p className="font-display text-sm font-semibold uppercase tracking-[0.16em]">
-          {isBefore ? "Pre-training" : "Post-training"}
+          {isBefore ? "Voor de training" : "Na de training"}
         </p>
         <span className="size-10" />
       </header>
 
       <div className="px-5">
         <h1 className="font-display text-[30px] font-bold leading-[1.05]">
-          {isBefore ? "Baseline check-in" : "How do you feel now?"}
+          {isBefore ? "Nulmeting" : "Hoe voel je je nu?"}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {isBefore
-            ? "Two readings: your heart rate right now, and a five-tap reaction test."
+            ? "Twee metingen: je hartslag op dit moment, en een reactietest van vijf tikken."
             : draft
-              ? `Finishing ${draft.activity} — baseline was ${draft.hr} bpm / ${draft.reaction} ms.`
-              : "No baseline saved, so we'll estimate one for this session."}
+              ? `${draft.activity} afronden — nulmeting was ${draft.hr} bpm / ${draft.reaction} ms.`
+              : "Geen nulmeting opgeslagen, dus we schatten er een voor deze sessie."}
         </p>
       </div>
 
@@ -117,7 +117,7 @@ function CheckIn() {
                 : "border-2 border-border bg-card text-muted-foreground"
             }`}
           >
-            Before
+            Voor
           </Link>
           <Link
             to="/checkin"
@@ -128,7 +128,7 @@ function CheckIn() {
                 : "border-2 border-border bg-card text-muted-foreground"
             }`}
           >
-            After
+            Na
           </Link>
         </div>
       </div>
@@ -136,7 +136,7 @@ function CheckIn() {
       {isBefore ? (
         <div className="mt-4 px-5">
           <div className="rounded-3xl bg-card p-5 shadow-chunky">
-            <p className="font-display text-base font-semibold">Today&apos;s training</p>
+            <p className="font-display text-base font-semibold">Training van vandaag</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {ACTIVITY_OPTIONS.map((a) => (
                 <button
@@ -157,7 +157,7 @@ function CheckIn() {
         <div className="mt-4 px-5">
           <div className="rounded-3xl bg-card p-5 shadow-chunky">
             <div className="flex items-center justify-between">
-              <p className="font-display text-base font-semibold">Session length</p>
+              <p className="font-display text-base font-semibold">Duur van de sessie</p>
               <p className="font-display text-2xl font-bold tabular">
                 {duration}
                 <span className="text-sm font-medium text-muted-foreground"> min</span>
@@ -170,7 +170,7 @@ function CheckIn() {
               step={5}
               value={duration}
               onChange={(e) => setDuration(Number(e.target.value))}
-              aria-label="Session length in minutes"
+              aria-label="Duur van de sessie in minuten"
               className="mt-4 h-2 w-full appearance-none rounded-full bg-muted accent-coral"
             />
           </div>
@@ -181,8 +181,8 @@ function CheckIn() {
         <HeartRateCard
           value={hr}
           onChange={setHr}
-          label="Heart rate"
-          hint={isBefore ? "Resting" : "Right after"}
+          label="Hartslag"
+          hint={isBefore ? "In rust" : "Direct erna"}
         />
       </div>
 
@@ -199,9 +199,9 @@ function CheckIn() {
         >
           {canSave
             ? isBefore
-              ? "Save baseline & train"
-              : "Finish session"
-            : "Run the reaction test first"}
+              ? "Nulmeting opslaan & trainen"
+              : "Sessie afronden"
+            : "Doe eerst de reactietest"}
         </button>
       </div>
     </div>
