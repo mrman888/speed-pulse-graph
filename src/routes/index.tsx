@@ -118,11 +118,13 @@ function Home() {
           </div>
           <div className="mt-4 flex h-28 items-end justify-between gap-2">
             {lastSeven.map((s) => (
-              <div key={s.id} className="flex flex-1 flex-col items-center gap-1.5">
-                <div
-                  className={`w-full rounded-full ${BAR_BG[bandColor(s.band)]}`}
-                  style={{ height: `${Math.max(12, s.intensity)}%` }}
-                />
+              <div key={s.id} className="flex h-full flex-1 flex-col items-center gap-1.5">
+                <div className="flex w-full flex-1 items-end">
+                  <div
+                    className={`w-full rounded-full ${BAR_BG[bandColor(s.band)]}`}
+                    style={{ height: `${Math.max(12, s.intensity)}%` }}
+                  />
+                </div>
                 <span className="text-[10px] font-semibold text-muted-foreground">
                   {new Date(s.date).toLocaleDateString("nl-NL", { weekday: "narrow" })}
                 </span>
