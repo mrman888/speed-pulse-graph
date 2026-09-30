@@ -5,6 +5,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  LabelList,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -38,6 +39,33 @@ const axis = {
   tick: { fontSize: 10, fill: "var(--muted-foreground)" },
   stroke: "var(--border)",
 };
+
+// Waardelabel boven elke staaf. Lettergrootte past zich aan de staafbreedte aan:
+// totale tekstbreedte (0.62px per teken per pt) mag nooit breder zijn dan de staaf.
+function BarLabel(props: {
+  x?: number;
+  y?: number;
+  width?: number;
+  value?: number | string;
+}) {
+  const { x, y, width, value } = props;
+  if (value == null || x == null || y == null || !width) return null;
+  const digits = String(Math.round(Number(value))).length;
+  const fontSize = Math.max(6, Math.min(12, Math.floor(width / (digits * 0.62))));
+  return (
+    <text
+      x={x + width / 2}
+      y={y - 3}
+      textAnchor="middle"
+      fontSize={fontSize}
+      fontWeight={700}
+      fill="var(--muted-foreground)"
+      fontFamily="var(--font-body)"
+    >
+      {Math.round(Number(value))}
+    </text>
+  );
+}
 
 function ChartCard({
   title,
