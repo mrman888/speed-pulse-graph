@@ -117,19 +117,28 @@ function Home() {
             <span className="text-[11px] font-semibold text-muted-foreground">Intensiteit</span>
           </div>
           <div className="mt-4 flex h-28 items-end justify-between gap-2">
-            {lastSeven.map((s) => (
-              <div key={s.id} className="flex h-full flex-1 flex-col items-center gap-1.5">
-                <div className="flex w-full flex-1 items-end">
-                  <div
-                    className={`w-full rounded-full ${BAR_BG[bandColor(s.band)]}`}
-                    style={{ height: `${Math.max(12, s.intensity)}%` }}
-                  />
+            {lastSeven.map((s) => {
+              const h = Math.max(12, s.intensity);
+              return (
+                <div key={s.id} className="flex h-full flex-1 flex-col items-center gap-1.5">
+                  <div className="relative w-full flex-1">
+                    <span
+                      className="absolute inset-x-0 mb-1 text-center font-display text-[10px] font-bold tabular text-ink"
+                      style={{ bottom: `calc(${h}% + 2px)` }}
+                    >
+                      {s.intensity}
+                    </span>
+                    <div
+                      className={`absolute inset-x-0 bottom-0 rounded-full ${BAR_BG[bandColor(s.band)]}`}
+                      style={{ height: `${h}%` }}
+                    />
+                  </div>
+                  <span className="text-[10px] font-semibold text-muted-foreground">
+                    {new Date(s.date).toLocaleDateString("nl-NL", { weekday: "narrow" })}
+                  </span>
                 </div>
-                <span className="text-[10px] font-semibold text-muted-foreground">
-                  {new Date(s.date).toLocaleDateString("nl-NL", { weekday: "narrow" })}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
