@@ -13,13 +13,13 @@ export const Route = createFileRoute("/checkin")({
   }),
   head: () => ({
     meta: [
-      { title: "Check-in — PulsePop" },
+      { title: "Check-in — SportHealth Tracker" },
       {
         name: "description",
         content:
           "Leg je hartslag vast en doe de tik-op-de-stip reactietest voor en na je training.",
       },
-      { property: "og:title", content: "Check-in — PulsePop" },
+      { property: "og:title", content: "Check-in — SportHealth Tracker" },
       {
         property: "og:description",
         content: "Hartslag invoeren plus een reactietest van vijf tikken, voor en na de training.",

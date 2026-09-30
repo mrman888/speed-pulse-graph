@@ -5,13 +5,13 @@ import { bandColor, formatDay } from "@/lib/sessions";
 export const Route = createFileRoute("/summary")({
   head: () => ({
     meta: [
-      { title: "Sessieoverzicht — PulsePop" },
+      { title: "Sessieoverzicht — SportHealth Tracker" },
       {
         name: "description",
         content:
           "Vergelijking van voor en na je laatste training: hartslagstijging, verandering in reactietijd en intensiteitsscore.",
       },
-      { property: "og:title", content: "Sessieoverzicht — PulsePop" },
+      { property: "og:title", content: "Sessieoverzicht — SportHealth Tracker" },
       {
         property: "og:description",
         content: "Zie hoe hoog je hartslag klom en hoe goed je reflexen het hielden.",
