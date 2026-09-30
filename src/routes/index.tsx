@@ -5,13 +5,13 @@ import { bandColor, formatDay, initials } from "@/lib/sessions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PulsePop — Trainingsintensiteit bijhouden" },
+      { title: "SportHealth Tracker — Trainingsintensiteit bijhouden" },
       {
         name: "description",
         content:
           "Leg je hartslag en reactiesnelheid vast voor en na je training en zie hoe intensief elke sessie echt was.",
       },
-      { property: "og:title", content: "PulsePop — Trainingsintensiteit bijhouden" },
+      { property: "og:title", content: "SportHealth Tracker — Trainingsintensiteit bijhouden" },
       {
         property: "og:description",
         content: "Hartslag plus reactiesnelheid omgezet in een intensiteitsscore.",
@@ -55,7 +55,7 @@ function Home() {
             P
           </div>
           <div>
-            <p className="font-display text-lg font-bold leading-none">PulsePop</p>
+            <p className="font-display text-lg font-bold leading-none">SportHealth Tracker</p>
             <p className="text-[11px] font-medium text-muted-foreground">
               Trainingsintensiteit bijhouden
             </p>

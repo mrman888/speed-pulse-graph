@@ -19,13 +19,13 @@ import { formatShort } from "@/lib/sessions";
 export const Route = createFileRoute("/stats")({
   head: () => ({
     meta: [
-      { title: "Grafieken — PulsePop" },
+      { title: "Grafieken — SportHealth Tracker" },
       {
         name: "description",
         content:
           "Grafieken van je trainingsintensiteit, hartslagstijging en reactiesnelheid over al je sessies.",
       },
-      { property: "og:title", content: "Grafieken — PulsePop" },
+      { property: "og:title", content: "Grafieken — SportHealth Tracker" },
       {
         property: "og:description",
         content: "Trends in intensiteit, hartslag en reactietijd door je trainingsgeschiedenis.",
