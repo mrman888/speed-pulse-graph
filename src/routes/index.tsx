@@ -78,25 +78,6 @@ function Home() {
         </h1>
       </div>
 
-      <div className="mt-4 px-5">
-        <div className="flex gap-2">
-          <Link
-            to="/checkin"
-            search={{ phase: "before" }}
-            className="flex-1 rounded-full bg-ink py-3 text-center font-display text-sm font-semibold text-ink-foreground"
-          >
-            Voor
-          </Link>
-          <Link
-            to="/checkin"
-            search={{ phase: "after" }}
-            className="flex-1 rounded-full border-2 border-border bg-card py-3 text-center font-display text-sm font-semibold text-muted-foreground"
-          >
-            Na
-          </Link>
-        </div>
-      </div>
-
       <div className="mt-4 grid grid-cols-2 gap-3 px-5">
         <div className="rounded-3xl bg-card p-4 shadow-chunky">
           <p className="text-[11px] font-semibold text-muted-foreground">Gem. intensiteit</p>
@@ -174,7 +155,7 @@ function Home() {
         </div>
       </div>
 
-      <div className="mt-auto px-5 pb-6 pt-5">
+      <div className="sticky bottom-0 z-10 bg-gradient-to-t from-cream via-cream/95 to-transparent px-5 pb-5 pt-6">
         <Link
           to="/checkin"
           search={{ phase: "before" }}
