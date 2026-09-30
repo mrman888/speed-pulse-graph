@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnalyseRouteImport } from './routes/analyse'
 import { Route as CheckinRouteImport } from './routes/checkin'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as SummaryRouteImport } from './routes/summary'
@@ -17,6 +18,11 @@ import { Route as SummaryRouteImport } from './routes/summary'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyseRoute = AnalyseRouteImport.update({
+  id: '/analyse',
+  path: '/analyse',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckinRoute = CheckinRouteImport.update({
@@ -37,12 +43,14 @@ const SummaryRoute = SummaryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
   '/checkin': typeof CheckinRoute
   '/stats': typeof StatsRoute
   '/summary': typeof SummaryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
   '/checkin': typeof CheckinRoute
   '/stats': typeof StatsRoute
   '/summary': typeof SummaryRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analyse': typeof AnalyseRoute
   '/checkin': typeof CheckinRoute
   '/stats': typeof StatsRoute
   '/summary': typeof SummaryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/checkin' | '/stats' | '/summary'
+  fullPaths: '/' | '/analyse' | '/checkin' | '/stats' | '/summary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/checkin' | '/stats' | '/summary'
-  id: '__root__' | '/' | '/checkin' | '/stats' | '/summary'
+  to: '/' | '/analyse' | '/checkin' | '/stats' | '/summary'
+  id: '__root__' | '/' | '/analyse' | '/checkin' | '/stats' | '/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyseRoute: typeof AnalyseRoute
   CheckinRoute: typeof CheckinRoute
   StatsRoute: typeof StatsRoute
   SummaryRoute: typeof SummaryRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analyse': {
+      id: '/analyse'
+      path: '/analyse'
+      fullPath: '/analyse'
+      preLoaderRoute: typeof AnalyseRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkin': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyseRoute: AnalyseRoute,
   CheckinRoute: CheckinRoute,
   StatsRoute: StatsRoute,
   SummaryRoute: SummaryRoute,
