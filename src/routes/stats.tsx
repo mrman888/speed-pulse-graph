@@ -144,12 +144,14 @@ function Stats() {
 
       <div className="mt-4 space-y-4 px-5">
         <ChartCard title="Intensiteit" note="per sessie">
-          <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 16, right: 4, left: -20, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
             <YAxis domain={[0, 100]} {...axis} />
             <Tooltip {...tooltipStyle} />
-            <Bar dataKey="intensity" fill="var(--coral)" radius={[8, 8, 8, 8]} />
+            <Bar dataKey="intensity" fill="var(--coral)" radius={[8, 8, 8, 8]}>
+              <LabelList dataKey="intensity" content={<BarLabel />} />
+            </Bar>
           </BarChart>
         </ChartCard>
 
@@ -234,12 +236,14 @@ function Stats() {
             </div>
           }
         >
-          <BarChart data={data} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
+          <BarChart data={data} margin={{ top: 16, right: 4, left: -20, bottom: 0 }}>
             <CartesianGrid vertical={false} stroke="var(--border)" />
             <XAxis dataKey="label" {...axis} interval="preserveStartEnd" />
             <YAxis {...axis} />
             <Tooltip {...tooltipStyle} />
-            <Bar dataKey="lift" fill="var(--sun)" radius={[8, 8, 8, 8]} />
+            <Bar dataKey="lift" fill="var(--sun)" radius={[8, 8, 8, 8]}>
+              <LabelList dataKey="lift" content={<BarLabel />} />
+            </Bar>
           </BarChart>
         </ChartCard>
       </div>
