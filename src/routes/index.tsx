@@ -72,9 +72,9 @@ function Home() {
       <div className="px-5">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-coral">{today}</p>
         <h1 className="mt-1 font-display text-[34px] font-bold leading-[1.02]">
-          Hoe hard
+          Hoe zwaar
           <br />
-          ging je ervoor?
+          was jouw workout?
         </h1>
       </div>
 
