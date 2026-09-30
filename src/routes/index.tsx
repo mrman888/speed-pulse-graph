@@ -91,6 +91,21 @@ function Home() {
         </div>
       </div>
 
+      <div className="mt-3 px-5">
+        <Link
+          to="/analyse"
+          className="flex items-center justify-between rounded-3xl bg-ink p-4 text-cream shadow-chunky"
+        >
+          <div>
+            <p className="font-display text-base font-bold">Analyse & advies</p>
+            <p className="text-[11px] font-medium opacity-80">Inzichten en hersteltips met grafieken</p>
+          </div>
+          <span className="grid size-9 place-items-center rounded-full bg-sun font-bold text-sun-foreground">
+            →
+          </span>
+        </Link>
+      </div>
+
       <div className="mt-4 px-5">
         <div className="rounded-3xl bg-card p-5">
           <div className="flex items-center justify-between">
